@@ -1,0 +1,74 @@
+<p style="color: green"><%= notice %></p>
+<div>
+  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
+  <%= link_to "Back to movies", movies_path %>
+</div>
+<hr />
+<h3><%= @movie.title %></h3>
+<div id="navbar" class="1collapse">
+  <ul class="nav navbar-nav">
+    <li class="">
+      <p style="width:650px; heigh:auto">
+      <% if @movie.poster.attached? %>
+        <%= link_to image_tag(@movie.poster,
+        style:"width:640px; heigh:auto"), @movie.poster %>
+      <% end %>
+      </p>
+    </li>
+    <li class="">
+      <p style="width:650px; heigh:auto">
+        <% if @movie.title_song.audio? %>
+        <audio controls>
+          <source src="<%= rails_blob_url(@movie.title_song) %>"
+            type="<%= @movie.title_song.content_type %>" />
+        </audio>
+        <% end %>
+      </p>
+    </li>
+    <li class="">
+    <% if @movie.trailer.video? %>
+      <video controls width="640">
+        <source src="<%= rails_blob_url(@movie.trailer) %>"
+          type="<%= @movie.trailer.content_type %>" />
+      </video>
+    <% end %>
+    </li>
+    <li><hr /></li>
+    <li class="">
+      <p style="width:400px; heigh:200px">
+        <%= @movie.body %>
+      </p>
+    </li>
+    <li class="">
+      <p style="width:650px; heigh:auto">
+        <% if @movie.images.attached? %>
+          <% @movie.images.each do |attachment| %>
+            <% if attachment.image? %>
+              <%= image_tag attachment, width: "200px" %>
+            <% elsif attachment.audio? %>
+              <audio controls>
+                <source src="<%= rails_blob_url(attachment) %>"
+                  type="<%= attachment.content_type %>" />
+              </audio>
+            <% elsif attachment.video? %>
+              <video controls width="640" height="480">
+                <source src="<%= rails_blob_url(attachment) %>"
+                  type="<%= attachment.content_type %>" />
+              </video>
+            <% else %>
+              <%= link_to attachment.filename,
+              rails_blob_path(attachment, disposition: "attachment") %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </p>
+    </li>
+  </ul>
+</div>
+<hr />
+<div>
+  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
+  <%= link_to "Back to movies", movies_path %>
+
+  <%= button_to "Destroy this movie", @movie, method: :delete %>
+</div>

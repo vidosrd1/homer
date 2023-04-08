@@ -1,0 +1,53 @@
+<div id="<%= dom_id movie %>">
+  <p>
+    <%= link_to movie.title, movie_path(movie),
+    class: "text-orange-600 underline hover:text-orange-700" %>
+  </p>
+  <hr />
+  <% if movie.poster.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+    <%= link_to image_tag(movie.poster,
+    style:"width:300px, height:300px"), movie.poster %>
+  <% end %>
+  <hr />
+  <p>
+    <strong>Title song:</strong>
+    <% if title_song.audio? %>
+    <audio controls>
+      <source src="<%= rails_blob_url(title_song) %>"
+        type="<%= title_song.content_type %>" />
+    </audio>
+    <% end %>
+  </p>
+  <p>
+    <strong>Trailer:</strong>
+    <% if trailer.video? %>
+      <video controls width="480">
+        <source src="<%= rails_blob_url(trailer) %>"
+          type="<%= trailer.content_type %>" />
+      </video>
+    <% end %>
+  </p>
+  <% if movie.images.attached? %>
+    <% movie.images.each do |attachment| %>
+      <% if attachment.image? %>
+        <%= image_tag attachment, width: "200px" %>
+      <% elsif attachment.audio? %>
+        <audio controls>
+          <source src="<%= rails_blob_url(attachment) %>"
+            type="<%= attachment.content_type %>" />
+        </audio>
+      <% elsif attachment.video? %>
+        <video controls width="480">
+          <source src="<%= rails_blob_url(attachment) %>"
+            type="<%= attachment.content_type %>" />
+        </video>
+      <% else %>
+        <%= link_to attachment.filename,
+        rails_blob_path(attachment, disposition: "attachment") %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr />
+  <%= movie.body %>
+  <br />
+</div>

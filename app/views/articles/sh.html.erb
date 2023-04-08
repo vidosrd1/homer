@@ -1,0 +1,7 @@
+<p style="width:640px; heigh:auto">
+  <% if @article.pictures.attached? %>
+  <% @article.pictures.each do |pictere| %>
+  <%= link_to image_tag(pictere,
+  style:"width:100px; heigh:auto"), pictere %>          <% end %>
+  <% end %>
+</p>

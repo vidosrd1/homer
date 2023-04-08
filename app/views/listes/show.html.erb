@@ -1,0 +1,41 @@
+<p style="color: green"><%= notice %></p>
+<div>
+  <%= link_to "Edit this liste", edit_liste_path(@liste) %> |
+  <%= link_to "Back to listes", listes_path %>
+</div>
+<hr />
+<h3><%= @liste.title %></h3>
+<div id="navbar" class="1collapse">
+  <ul class="nav navbar-nav">
+    <li class="">
+      <p style="width:650px; heigh:auto">
+      <% if @liste.image.attached? %>
+        <%= link_to image_tag(@liste.image,
+        style:"width:640px; heigh:auto"), @liste.image %>
+      <% end %>
+      </p>
+    <li><hr /></li>
+    <li class="">
+      <p style="width:400px; heigh:200px">
+        <%= @liste.body %>
+      </p>
+    </li>
+    <li class="">
+      <p style="width:640px; heigh:auto">
+        <% if @liste.pictures.attached? %>
+        <% @liste.pictures.each do |pictere| %>
+        <%= link_to image_tag(pictere,
+        style:"width:100px; heigh:auto"), pictere %>          <% end %>
+        <% end %>
+      </p>
+    </li>
+  </ul>
+</div>
+<hr />
+<div>
+  <%= link_to "Edit this liste", edit_liste_path(@liste) %> |
+  <%= link_to "Back to listes", listes_path %>
+
+  <%= button_to "Destroy this liste", @liste, method: :delete %>
+</div>
+<br />

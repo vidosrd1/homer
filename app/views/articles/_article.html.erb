@@ -1,0 +1,24 @@
+<div id="<%= dom_id article %>">
+  <p>
+    <%= link_to article.title, article_path(article),
+    class: "text-orange-600 underline hover:text-orange-700" %>
+  </p>
+  <% if article.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+    <%= link_to image_tag(article.image,
+    style:"width:300px, height:300px"), article.image %>
+  <% end %>
+  <hr />
+  <p>
+    <strong>Publish:</strong>
+    <%= article.publish %>
+  </p>
+  <%= article.body %>
+  <br />
+  <% if article.pictures.attached? %>
+    <% article.pictures.each do |picture| %>
+      <%= link_to image_tag(picture,
+       style:"width:150px, height:150px"),
+       picture %>
+    <% end %>
+  <% end %>
+</div>

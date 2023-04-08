@@ -1,0 +1,21 @@
+<div id="<%= dom_id liste %>">
+  <p>
+    <%= link_to liste.title, liste_path(liste),
+    class: "text-orange-600 underline hover:text-orange-700" %>
+  </p>
+  <hr />
+  <% if liste.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+    <%= link_to image_tag(liste.image,
+    style:"width:300px, height:300px"), liste.image %>
+  <% end %>
+  <hr />
+  <%= liste.body %>
+  <br />
+  <% if liste.pictures.attached? %>
+    <% liste.pictures.each do |picture| %>
+      <%= link_to image_tag(picture,
+       style:"width:150px, height:150px"),
+       picture %>
+    <% end %>
+  <% end %>
+</div>

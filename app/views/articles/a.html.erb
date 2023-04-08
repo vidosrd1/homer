@@ -1,0 +1,42 @@
+<% @articles.each do |article| %>
+  <tr>
+    <td></td>
+    <td style="width:10px; height:auto"></td>
+    <td><%= article.title %></td>
+    <td style="width:10px; height:auto"></td>
+    <td style="padding-top:10px; padding-right:0px; padding-bottom:20px;
+    padding-left:0px;">
+    <%= truncate(strip_tags(atricle.body.to_s), length: 80) %>
+    </td>
+    <td style="width:10px; height:auto"></td>
+    <td></td>
+    <td style="width:10px; height:auto"></td>
+    <td></td>
+  </tr>
+<% end %>
+
+<div>
+  <%= form.label :user_id, style: "display: block" %>
+  <%= form.text_field :user_id %>
+</div>
+
+<p>
+  <strong>User:</strong>
+  <%= article.user_id %>
+</p>
+
+<% if article.image.content_type.in?(
+%w[image/jpeg image/jpg image/png
+)%>
+  <%= link_to image_tag(article.image),
+  article.image if article.image.attached? %>
+<% end %>
+<br />
+<%= truncate(strip_tags(atricle.body.to_s), length: 80) %
+<%= link_to 'Show', article %>
+<%= link_to 'Edit', edit_article_path(article) %>
+<%= article.pictures.each do |picture| %>
+  <%= link_to image_tag(picture,
+   style:"width:150px, height:150px"),
+   picture %>
+<% end %>

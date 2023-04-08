@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Listes</h1>
+<%= link_to "New liste", new_liste_path %>
+<hr />
+<%= form_with(url: listes_path, method: :get,
+data: {controller: "search-form", turbo_frame: "listes", turbo_action: "advance"}) do |form| %>
+  <%= form.label :query, "Search by article title:", class: "block mb-2" %>
+  <div class="flex space-x-3">
+    <%= form.text_field :query, class: "py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none" %>
+
+    <%= form.submit 'Search', class: "px-4 py-3 font-medium bg-orange-300 text-neutal-900 rounded flex items-center cursor-pointer hover:bg-orange-400 focus:ring-4 ring-0 focus:ring-orange-100" %>
+  </div>
+<% end %>
+<hr />
+<div id="listes">
+  <% @listes.each do |liste| %>
+  <div class="row  mt-4 clearfix">
+    <div class="col-8 col-sm-8 col-md-9 col-lg-9">
+      <h5 class="mt-0 mb-1">
+        <a href="/listes/<%= liste.id %>",
+        class="nav-link"><%= liste.title %></a>
+      </h5>
+      <%= truncate(strip_tags(liste.body.to_s), length:160) %>
+    </div>
+    <div class="col-4 col-sm-4 col-md-3 col-lg-3 clearfix">
+      <% if liste.image.attached? %>
+        <%= link_to image_tag(liste.image,
+        style:"width:160px; heigh:auto"), liste.image %>
+      <% end %>
+    </div>
+  </div>
+  <hr />
+  <% end %>
+</div>
+<br />
+<%= link_to "New liste", new_liste_path %>
+<br />
+<hr />

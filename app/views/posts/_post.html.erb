@@ -1,0 +1,16 @@
+<div id="<%= dom_id post %>">
+  <p>
+    <strong>Title:</strong>
+    <%= post.title %>
+  </p>
+  <% if post.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+    <%= link_to image_tag(post.image,
+    style:"width:300px, height:300px"), post.image %>
+  <% end %>
+  <hr />
+  <p>
+    <strong>Publish:</strong>
+    <%= post.publish %>
+  </p>
+  <%= post.body %>
+</div>
